@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const path = require('path');
+const Sockets = require('./sockets');
 
 class Server {
   constructor() {
@@ -16,12 +17,13 @@ class Server {
   }
 
   configSockets() {
-    // Configurar sockets
+    new Sockets(this.io);
   }
 
   execute() {
     // Init middlewares
     this.middlewares();
+    this.configSockets();
 
     // Init Server
     this.server.listen(this.port, () => {
